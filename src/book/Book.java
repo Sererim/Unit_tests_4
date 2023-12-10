@@ -1,4 +1,4 @@
-package seminars.fourth.book;
+package src.book;
 
 public class Book {
     private String id;
