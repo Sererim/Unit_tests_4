@@ -1,27 +1,31 @@
 package tests;
 
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import org.mockito.Mock;
 
-import src.book.BookRepository;
+import src.book.InMemoryBookRepository;
 import src.book.BookService;
 
 public class testBookService {
 
-    @Mock
-    private BookRepository bookRepository;
+    InMemoryBookRepository bookRepository = mock(InMemoryBookRepository.class);
 
-    private BookService bookService;
+    public BookService bookService;
 
     public void testFindBookById() {
-        bookService.findBookById(null);
-        verify(bookRepository, times(1)).findById(null);
+        bookService.findBookById("1");
+        verify(bookRepository, times(1)).findById("1");
+        assertThat(bookRepository.findById("1").getTitle()).isEqualTo("Book1");
     }
 
     public void testFindAllBooks() {
         bookService.findAllBooks();
         verify(bookRepository, times(1)).findAll();
+        assertThat(bookRepository.findAll().size()).isEqualTo(2);
     }
 
     public static void main(String[] args) {
